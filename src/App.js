@@ -21,14 +21,12 @@ function App() {
 
 
   const addToFvrts = (id) => {
-    let product = products.find((product) => product.id === id);
 
     // console.log(id);
     setFvrt((prevState) => {
       const updatedState = {
         ...prevState,
-        [id]: !prevState[id],
-        product // Toggle favorite status for this product
+        [id]: !prevState[id], // Toggle favorite status for this product
       };
 
 
