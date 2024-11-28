@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Video({ product, addToFvrts, fvrt, add_to_cart }) {
+function Video({ product, addToFvrts, fvrt, add_to_cart, quantity, handleQuantityChange }) {
 
     return (
         <div className="card" >
@@ -29,15 +29,16 @@ function Video({ product, addToFvrts, fvrt, add_to_cart }) {
                 </div>
 
                 <div className='cta'>
-                    <span className='quantity'> <select className="form-select" aria-label="Default select example">
-                        <option value="1" selected>1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
+                    <span className='quantity'>
+                        <select className="form-select" id={'quantity' + product.id} name='quantity' value={quantity[product.id] || 1} onChange={(e) => handleQuantityChange(product.id, e.target.value)} aria-label="Default select example">
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
                     </span>
 
-                    <span className='addToCart' onClick={() => add_to_cart(product.id)}>
+                    <span className='addToCart' onClick={() => add_to_cart(product.id,quantity[product.id] || 1 )}>
                         Add to cart
                     </span>
                 </div>

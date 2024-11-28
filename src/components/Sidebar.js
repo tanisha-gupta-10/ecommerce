@@ -12,7 +12,7 @@ import watchl from '../assets/asset 59.svg';
 import lvideos from '../assets/asset 60.svg';
 
 
-function Sidebar({ categories, fvrtCount, getCategory }) {
+function Sidebar({ categories, fvrtCount, getCategory, selectedCategory }) {
 
     return (
 
@@ -21,7 +21,7 @@ function Sidebar({ categories, fvrtCount, getCategory }) {
 
 
             <div className='scnd-part'>
-                <span className='items selected'>
+                <span className={`items ${selectedCategory  ? '' : 'selected'}`}>
                     <img src={home} className="" alt="" /> Home </span>
                 <span className='items'>
                     <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRI0ow4pbUnyZGodub0Rl8cMXlmxxzmxm2Ww&s' className="" alt="" /> Categories </span>
@@ -32,7 +32,7 @@ function Sidebar({ categories, fvrtCount, getCategory }) {
             <div className='thrd-part'>
                 <span className='items-main' style={{fontSize: '16px' , fontWeight: '600'}}> Categories <img src={you} /> </span>
 
-                {categories.map(category => <span key={category.id} className='items' style={{textTransform : 'capitalize'}} onClick={() => getCategory(category)}> {category} </span>
+                {categories.map(category => <span key={category.id} className={`items ${selectedCategory === category ? 'selected' : ''}`} style={{textTransform : 'capitalize'}} onClick={() => getCategory(category)}> {category} </span>
                 )}
 
             </div>

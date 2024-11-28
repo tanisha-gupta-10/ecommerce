@@ -68,6 +68,7 @@ body {
 .items:hover {
   background-color: #f2f2f2;
   border-radius: 8px;
+  font-weight: 600;
 }
 
 .items-main {

@@ -14,21 +14,29 @@ function App() {
   const [fvrt, setFvrt] = useState([]);
   const [cartPrice, setCartPrice] = useState();
   const [cart, setCart] = useState([]);
+  const [fvrtCart, setFvrtCart] = useState([]);
   const [fvrtCount, setFvrtCount] = useState();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState();
+  const [quantity, setQuantity] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
+  let fvrts = [];
 
   const addToFvrts = (id) => {
 
-    // console.log(id);
+    let product = products.find((product) => product.id === id);
+
+    console.log(fvrts);
+
     setFvrt((prevState) => {
       const updatedState = {
         ...prevState,
         [id]: !prevState[id], // Toggle favorite status for this product
       };
 
+      console.log(fvrtCart);
 
       // Update the count of liked items
       const newCount = Object.values(updatedState).filter(Boolean).length;
@@ -38,7 +46,22 @@ function App() {
       console.log(updatedState);
       return updatedState;
     });
+
+    setFvrtCart((prevCart) => {
+      const updatedCart = {
+        ...prevCart,
+        [id]:
+          product,
+
+      };
+
+      console.log(updatedCart);
+
+      return updatedCart;
+    })
   }
+
+
 
   const getCategory = (newCategory) => {
     setCategory(newCategory);
@@ -53,21 +76,54 @@ function App() {
     }
   }
 
+  const handleQuantityChange = (id, value) => {
 
-  const add_to_cart = (id) => {
     console.log(id);
+    setQuantity((prevQuantities) => {
+      const updatedQuantity = {
+        ...prevQuantities,
+        [id]: Number(value), // Update the quantity for the specific item
+      }
+
+      console.log(updatedQuantity);
+
+      return updatedQuantity;
+    });
+
+  }
+
+
+  const add_to_cart = (id, count) => {
+    console.log(id, count);
+
     let product = products.find((product) => product.id === id);
 
     setCart((prevCart) => {
-      // Add product to the cart
-      const updatedCart = [...prevCart, product];
-      console.log("Updated Cart:", updatedCart); // Logs the updated cart immediately
+      // Check if the product is already in the cart
+      const existingProduct = prevCart.find((cartItem) => cartItem.id === id);
+
+      let updatedCart;
+
+      if (existingProduct) {
+        // Update the quantity of the existing product
+        updatedCart = prevCart.map((cartItem) =>
+          cartItem.id === id
+            ? { ...cartItem, quantity: cartItem.quantity + count }
+            : cartItem
+        );
+      } else {
+        // Add the new product with the specified quantity
+        updatedCart = [...prevCart, { ...product, quantity: count }];
+      }
 
       // Calculate the total price of the updated cart
-      const totalPrice = updatedCart.reduce((acc, cartItem) => acc + cartItem.price, 0);
+      const totalPrice = updatedCart.reduce(
+        (acc, cartItem) => acc + cartItem.price * cartItem.quantity,
+        0
+      );
 
       // Update the cart count
-      setCartCount(updatedCart.length);
+      setCartCount(updatedCart.reduce((acc, cartItem) => acc + cartItem.quantity, 0));
 
       // Update the cart price state
       setCartPrice(totalPrice);
@@ -79,15 +135,16 @@ function App() {
   };
 
 
-  const handleRemoveCart = (id) => {
-    console.log(id);
+
+  const handleRemoveCart = (id, count) => {
+    console.log(id, count);
 
     let product = products.find((product) => product.id === id);
 
     setCart((prevCart) => {
       const updatedCart = prevCart.filter((product) => product.id !== id);
       console.log("Updated Cart:", updatedCart);
-      const totalPrice = cartPrice - product.price;
+      const totalPrice = cartPrice - product.price * count;
 
       // Update the cart count
       setCartCount(updatedCart.length);
@@ -109,7 +166,7 @@ function App() {
     fetch('https://fakestoreapi.com/products')
       .then(res => res.json())
       .then(json => {
-        console.log(json);
+        // console.log(json);
         setProducts(json);
         setLoading(false);
       })
@@ -121,7 +178,7 @@ function App() {
     fetch('https://fakestoreapi.com/products/categories')
       .then(res => res.json())
       .then(json => {
-        console.log(json);
+        // console.log(json);
         setCategories(json);
       })
       .catch(error => {
@@ -134,10 +191,11 @@ function App() {
   // useEffect will be triggered when 'category' changes
   useEffect(() => {
     if (category) {
+      setSelectedCategory(category);
       fetch(`https://fakestoreapi.com/products/category/${category}`)
         .then(res => res.json())
         .then(json => {
-          console.log(json);
+          // console.log(json);
           setProducts(json);
         })
         .catch(error => {
@@ -151,7 +209,7 @@ function App() {
     <>
       <Topbar cartCount={cartCount} handleShowCart={handleShowCart} showCart={showCart} />
       <div className='main-part'>
-        <Sidebar categories={categories} fvrtCount={fvrtCount} getCategory={getCategory} />
+        <Sidebar categories={categories} fvrtCount={fvrtCount} getCategory={getCategory} selectedCategory={selectedCategory} />
         <Main products={products}
           loading={loading}
           addToFvrts={addToFvrts}
@@ -161,7 +219,9 @@ function App() {
           handleShowCart={handleShowCart}
           cart={cart}
           handleRemoveCart={handleRemoveCart}
-          cartPrice={cartPrice} />
+          cartPrice={cartPrice}
+          quantity={quantity}
+          handleQuantityChange={handleQuantityChange} />
       </div>
     </>
   );
