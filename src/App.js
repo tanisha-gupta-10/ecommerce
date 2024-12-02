@@ -140,10 +140,10 @@ function App() {
 
   const handleCollapse = async () => {
     if (collapsed) {
-      console.log("Collapsed");
+      console.log("expanded");
       setCollapsed(false);
     } else {
-      console.log("Expanded");
+      console.log("collapsed");
       setCollapsed(true);
     }
   };
@@ -223,8 +223,10 @@ function App() {
       // Check if the window width is smaller than 768px (for mobile devices)
       if (window.innerWidth <= 922) {
         setIsMobile(true);
+        setCollapsed(true); // Collapse the sidebar for mobile devices
       } else {
         setIsMobile(false);
+        setCollapsed(false); // Collapse the sidebar for mobile devices
 
       }
     };
