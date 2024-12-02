@@ -138,6 +138,17 @@ function App() {
   };
 
 
+  const handleCollapse = async () => {
+    if (collapsed) {
+      console.log("Collapsed");
+      setCollapsed(false);
+    } else {
+      console.log("Expanded");
+      setCollapsed(true);
+    }
+  };
+
+
 
   const handleRemoveCart = (id, count) => {
     console.log(id, count);
@@ -233,9 +244,10 @@ function App() {
 
   return (
     <>
-      <Topbar cartCount={cartCount} handleShowCart={handleShowCart} isMobile={isMobile} showCart={showCart} />
-      <div className='main-part' style={{ gap : isMobile ? '10px' : '20px'}}>
-        <Sidebar categories={categories} isMobile={isMobile} collapsed={collapsed} fvrtCount={fvrtCount} getCategory={getCategory} selectedCategory={selectedCategory} />
+      <Topbar cartCount={cartCount} handleShowCart={handleShowCart} isMobile={isMobile} showCart={showCart} handleCollapse={handleCollapse} collapsed={collapsed} />
+      <div className='main-part' style={{ gap: isMobile ? '10px' : '20px' }}>
+        {collapsed ? null : <Sidebar categories={categories} isMobile={isMobile} collapsed={collapsed} fvrtCount={fvrtCount} getCategory={getCategory} selectedCategory={selectedCategory} />
+        }
         <Main products={products}
           loading={loading}
           addToFvrts={addToFvrts}

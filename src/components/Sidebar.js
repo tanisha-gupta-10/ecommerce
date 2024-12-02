@@ -15,8 +15,6 @@ function Sidebar({ categories, fvrtCount, getCategory, selectedCategory , isMobi
 
         <div className={`sidebar ${isMobile ? 'collapsed' : ''}`}>
 
-
-
             <div className='scnd-part'>
                 <span className={`items ${selectedCategory  ? '' : 'selected'} `}>
                     <img src={home} className="" alt="" /> {isMobile ? '' : 'Home'} </span>
