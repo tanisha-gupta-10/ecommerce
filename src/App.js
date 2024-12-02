@@ -234,7 +234,7 @@ function App() {
   return (
     <>
       <Topbar cartCount={cartCount} handleShowCart={handleShowCart} isMobile={isMobile} showCart={showCart} />
-      <div className='main-part'>
+      <div className='main-part' style={{ gap : isMobile ? '10px' : '20px'}}>
         <Sidebar categories={categories} isMobile={isMobile} collapsed={collapsed} fvrtCount={fvrtCount} getCategory={getCategory} selectedCategory={selectedCategory} />
         <Main products={products}
           loading={loading}
