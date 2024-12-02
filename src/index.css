@@ -416,3 +416,8 @@ form {
 .smallCard .cta {
   flex-direction: column;
 }
+
+.smallCard .like-icon {
+  width: 15px;
+  height: 15px;
+}
