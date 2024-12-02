@@ -233,7 +233,7 @@ function App() {
 
   return (
     <>
-      <Topbar cartCount={cartCount} handleShowCart={handleShowCart} showCart={showCart} />
+      <Topbar cartCount={cartCount} handleShowCart={handleShowCart} isMobile={isMobile} showCart={showCart} />
       <div className='main-part'>
         <Sidebar categories={categories} isMobile={isMobile} collapsed={collapsed} fvrtCount={fvrtCount} getCategory={getCategory} selectedCategory={selectedCategory} />
         <Main products={products}

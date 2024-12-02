@@ -3,18 +3,19 @@ import ham from '../assets/asset 41.svg';
 import youtube from '../assets/asset 42.svg';
 
 
-export default function Topbar({ cartCount, handleShowCart, showCart }) {
+export default function Topbar({ cartCount, handleShowCart, showCart, isMobile }) {
 
     return (
         <>
             <div className='topbar'>
                 <div className='top-part'>
                     <img src={ham} className='hamburger' />
-                    <div className='heading'>Q-commerce</div>
+                    {isMobile ? '' : <div className='heading'>Q-commerce</div>}
+                    
                 </div>
 
 
-                <form className="d-flex">
+                <form className="d-flex" style={{width : isMobile ? '90%' : '40%', margin : isMobile ? '0' : '0 0 0 40px'}}>
                     <input className="form-control me-2" type="search" id='search' name='search' placeholder="Search" aria-label="Search" />
                 </form>
 
