@@ -21,6 +21,9 @@ function App() {
   const [category, setCategory] = useState();
   const [quantity, setQuantity] = useState({});
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+
 
   let fvrts = [];
 
@@ -204,12 +207,35 @@ function App() {
     }
   }, [category]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      // Check if the window width is smaller than 768px (for mobile devices)
+      if (window.innerWidth <= 922) {
+        setIsMobile(true);
+      } else {
+        setIsMobile(false);
+
+      }
+    };
+
+    // Initial check
+    handleResize();
+
+    // Add event listener to handle resize
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
 
   return (
     <>
       <Topbar cartCount={cartCount} handleShowCart={handleShowCart} showCart={showCart} />
       <div className='main-part'>
-        <Sidebar categories={categories} fvrtCount={fvrtCount} getCategory={getCategory} selectedCategory={selectedCategory} />
+        <Sidebar categories={categories} isMobile={isMobile} collapsed={collapsed} fvrtCount={fvrtCount} getCategory={getCategory} selectedCategory={selectedCategory} />
         <Main products={products}
           loading={loading}
           addToFvrts={addToFvrts}
@@ -221,7 +247,8 @@ function App() {
           handleRemoveCart={handleRemoveCart}
           cartPrice={cartPrice}
           quantity={quantity}
-          handleQuantityChange={handleQuantityChange} />
+          handleQuantityChange={handleQuantityChange}
+          isMobile={isMobile} />
       </div>
     </>
   );

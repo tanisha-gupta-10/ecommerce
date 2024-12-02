@@ -22,7 +22,7 @@ body {
   flex-direction: column;
   /* gap: 10px; */
   width: max-content;
-  width: 200px;
+  width: 220px;
   /* padding: 15px; */
 }
 
@@ -154,7 +154,8 @@ form {
 .videoSrc {
   display: flex;
   flex-wrap: wrap;
-  width: calc(100% - 200px);
+  width: 100%;
+  /* width: calc(100% - 200px); */
   gap: 20px;
   overflow: scroll;
   height: 100vh;
@@ -365,4 +366,36 @@ form {
 
 .cartItem p {
   font-weight: 600;
+}
+
+.collapsed .items {
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  padding: 5px;
+}
+
+.collapsed {
+  width: max-content;
+}
+
+.collapsed .thrd-part {
+  display: none;
+}
+
+.collapsed .scnd-part {
+  gap: 5px;
+}
+
+.smallCard {
+  width: calc(100% / 2 - 10px);
+}
+
+.smallCard .addToCart {
+  font-size: 14px;
+}
+
+.smallCard .form-select {
+  width: 60px;
+  background-position: right 10px center;
 }

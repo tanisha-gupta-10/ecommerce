@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Video({ product, addToFvrts, fvrt, add_to_cart, quantity, handleQuantityChange }) {
+function Video({ product, addToFvrts, fvrt, isMobile, add_to_cart, quantity, handleQuantityChange }) {
 
     return (
-        <div className="card" >
+        <div className={`card ${isMobile ? "smallCard" : ''}`} >
             <img src={fvrt[product.id]
                 ? 'https://d2n7zouke881gi.cloudfront.net/randomUploads/webUsage/svgs/group12.svg'
                 : 'https://d2n7zouke881gi.cloudfront.net/randomUploads/webUsage/svgs/vector118.svg'
